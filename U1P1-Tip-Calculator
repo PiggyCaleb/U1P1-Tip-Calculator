@@ -1,0 +1,67 @@
+import java.text.DecimalFormat;
+import java.util.Scanner;
+//decimal format to have two decimal places for cents
+//util.Scanner for user input
+
+public class Main {
+    public static void main(String[] args) {
+
+
+        Scanner s = new Scanner(System.in);
+
+
+        System.out.println("Don't use any symbols when inputting data or the program will not work");
+
+
+        System.out.println("Enter bill amount($): ");
+        //Enter any the bill amount before any tips
+        String B = s.nextLine();
+        double bill = Double.parseDouble(B);
+        //Parse String B into double bill to be able to use it in the math later
+
+
+
+        System.out.println("Enter tip percentage: ");
+        //Enter a your tip percentage
+        String T = s.nextLine();
+        double tipP = Double.parseDouble(T) / 100;
+        //Parse String T into double tipP (tipP = tip percentage) to be able to use it in the math later
+
+
+        double tipT = bill*tipP;
+        //tipT = tip total
+        //Calculates total tip amount in dollars by multiplying the original bill amount by the tip percentage
+
+
+        System.out.println("Number of people: ");
+        //Enter the number of people splitting the bill
+        String P = s.nextLine();
+        int peeps = Integer.parseInt(P);
+        //Parse String P into integer peeps (peeps = people) to use it in the math later
+
+        double finB = tipT + bill;
+        //finB (finB = final bill) is calculated by adding the total tip and the original bill
+
+
+        DecimalFormat df = new DecimalFormat("0.00");
+        System.out.println("Total tip amount: " + "$" + df.format((tipT * 100 + .5) / 100) );
+        //Decimal format to only display two decimal places including the zero in the hundredth place if there is one
+        //The math done here and onward is to replicate rounding up from thousandths to hundredths by multiplying by 100
+        //to move it up two decimal places then add .5 to replicate the rounding up then divide by 100 to bring it back
+        //down then the decimal format hides any previous decimal places behind the hundredths place
+
+        df = new DecimalFormat("0.00");
+        System.out.println("Total bill cost: " + "$" + df.format((finB * 100 + .5) / 100) );
+        //calculates final bill rounded up to the nearest hundredth
+
+        df = new DecimalFormat("0.00");
+        System.out.println("Tip per person: " + "$" + df.format( ( tipT / peeps * 100 + .5) / 100 ) );
+        // calculates the amount each person has to pay in tips by dividing the total tip amount by people then rounding
+        // to the nearest hundredth
+
+        df = new DecimalFormat("0.00");
+        System.out.println("Total bill per person: " + "$" + df.format(( finB / peeps * 100 + .5) / 100) );
+        // calculates the amount each person has to pay for the final bill by dividing the final bill variable by the
+        // amount of people then rounding to the nearest hundredth
+    }
+}
